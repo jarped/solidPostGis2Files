@@ -1,3 +1,1 @@
-SELECT 
-st_askml( (a.p_geom).geom)
-  FROM (SELECT ST_Dump(geom) AS p_geom from public.app_rphandlingsrom )  AS a;
+ SELECT '<Placemark><name>Reguleringsplaner</name><visibility>0</visibility><styleUrl>#transRedPoly</styleUrl><MultiGeometry>' || string_agg(b.kml, '')|| '</MultiGeometry></Placemark>' from (select st_askml( (a.p_geom).geom) as kml, a.id from (SELECT attr_gml_id as id, ST_Dump(geom) AS p_geom from public.app_rphandlingsrom )  AS a ) as b group by b.id;
